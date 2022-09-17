@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<form action="/" method="post">
+  <h1>URL Shortener</h1>
+  {% csrf_token %}
+  Please enter a URL that you wish to shorten.
+  <br>
+  <br>
+  {{ form }}
+  <br>
+  <br>
+  <input type="submit" value="Submit">
+</form>

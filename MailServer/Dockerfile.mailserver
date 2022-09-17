@@ -1,0 +1,43 @@
+FROM ubuntu:latest
+
+# Arguments defined in docker-compose.yml
+ARG user
+ARG uid
+ARG domain
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Create system user
+RUN useradd -G root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user
+RUN chown -R $user:$user /home/$user
+
+# Run update and upgrade
+RUN apt-get update
+# RUN apt-get upgrade -y
+
+# Add mail dependencies
+RUN apt-get install postfix -y && apt-get install mailutils -y
+
+
+# Create mail directory
+RUN mkdir -p /home/$user/Maildir
+
+# Set up postfix
+COPY ./docker/mailserver/postfix.main.cf /etc/postfix/main.cf
+COPY ./docker/mailserver/hosts /etc/hosts
+COPY ./docker/mailserver/hostname /etc/hostname
+COPY ./docker/mailserver/mailname /etc/mailname
+
+# Start mail server
+RUN postfix start
+
+# Change the user
+USER $user
+
+# Set working directory
+WORKDIR /home/$user
+
+CMD ["tail", "-f", "/dev/null"]
+

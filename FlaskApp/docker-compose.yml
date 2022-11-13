@@ -1,0 +1,25 @@
+# docker-compose.yml
+version: "3.7"
+services:
+  flask-server:
+    build:
+      args:
+        user: ${SERVER_USER}
+        uid: ${USER_UID}
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: flask-server
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    volumes:
+      - ./:/home/${SERVER_USER}/server
+    networks:
+      - server-network
+    env_file: .env
+    environment:
+      - SERVER_USER
+
+networks:
+  server-network:
+    driver: bridge

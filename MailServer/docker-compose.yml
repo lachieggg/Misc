@@ -1,0 +1,25 @@
+# docker-compose.yml
+version: "3.7"
+services:
+  mailserver:
+    build:
+      args:
+        user: ${MAIL_USER}
+        uid: ${MAIL_USER_UID}
+      context: .
+      dockerfile: ./Dockerfile.mailserver
+    container_name: mailserver
+    restart: unless-stopped
+    volumes:
+      - ./:/home/${MAIL_USER}/mail
+    networks:
+      - mailserver-network
+    env_file: .env
+    environment:
+      - MAIL_USER
+      - MAIL_PASSWORD
+      - MAIL_HOST
+      - MAIL_DOMAIN
+networks:
+  mailserver-network:
+    driver: bridge

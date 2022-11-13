@@ -1,0 +1,5 @@
+__pycache__
+plaintext
+encrypted
+*.swp
+encrypted.*

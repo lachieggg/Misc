@@ -6,7 +6,7 @@ import (
 )
 
 func count(name string) {
-	for i:=0; i<=5; i++ {
+	for i := 0; i <= 5; i++ {
 		fmt.Printf("%v:\t%v\n", name, i)
 	}
 }
@@ -29,7 +29,6 @@ func main() {
 	go func() { messages <- "message"; channel <- "variable!" }()
 
 	// Pass back the results of each channel back into the main thread
-	//
 	msg := <-messages
 	variable := <-channel
 
@@ -38,4 +37,3 @@ func main() {
 	fmt.Println(variable)
 	fmt.Println("Messages sent")
 }
-

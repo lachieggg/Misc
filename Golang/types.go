@@ -11,7 +11,7 @@ func main() {
 
 }
 
-// Sprintf definition...
-// func Sprintf(format string, a ...any) string
-// Sprintf formats according to a format specifier and returns the resulting string. 
-func (c Celsius) String() string { return fmt.Sprintf("%g°C", c)}
+// String
+func (c Celsius) String() string {
+	return fmt.Sprintf("%g°C", c)
+}

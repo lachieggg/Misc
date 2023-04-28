@@ -15,8 +15,8 @@ func main() {
 	fmt.Printf("Address of x: %v\n", &x)
 	fmt.Printf("Value of x: %d\n", x)
 
-	// Can return variable memory addresses from
-	// functions and assign them to pointers
+	// Can return a variable's memory address from
+	// functions and assign to pointer.
 	// They are still accessible!
 	p = f()
 	fmt.Println(p)
@@ -27,4 +27,3 @@ func f() *int {
 	v := 1
 	return &v
 }
-

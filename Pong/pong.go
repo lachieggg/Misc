@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"log"
 	"math"
@@ -18,19 +19,22 @@ const (
 	PaddleHeight   = 80
 	BallSize       = 20
 	BallSpeed      = 5
-	OpponentSpeed  = 3
+	OpponentSpeed  = 2
 	InitialDelay   = 60
 	BounceAngle    = 45
 	BounceAngleRad = BounceAngle * (math.Pi / 180)
+	WinningScore   = 5
 )
 
 var (
-	player1Y     = ScreenHeight / 2
-	player1Speed = 5
-	opponentY    = ScreenHeight / 2
-	ballX, ballY = ScreenWidth / 2, ScreenHeight / 2
-	ballDX       = BallSpeed * math.Cos(BounceAngleRad)
-	ballDY       = BallSpeed * -math.Sin(BounceAngleRad)
+	player1Y      = ScreenHeight / 2
+	player1Speed  = 5
+	opponentY     = ScreenHeight / 2
+	ballX, ballY  = ScreenWidth / 2, ScreenHeight / 2
+	ballDX        = BallSpeed * math.Cos(BounceAngleRad)
+	ballDY        = BallSpeed * -math.Sin(BounceAngleRad)
+	player1Score  = 0
+	opponentScore = 0
 )
 
 type Game struct{}
@@ -71,7 +75,29 @@ func (g *Game) Update() error {
 		ballDY = -ballDY
 	}
 
+	// Check ball out of bounds
+	if ballX <= 0 {
+		opponentScore++
+		resetBall()
+	}
+	if ballX >= ScreenWidth-BallSize {
+		player1Score++
+		resetBall()
+	}
+
+	// Check winning condition
+	if player1Score >= WinningScore || opponentScore >= WinningScore {
+		log.Println("Game Over")
+		// Reset game here or perform any necessary actions
+	}
+
 	return nil
+}
+
+func resetBall() {
+	ballX, ballY = ScreenWidth/2, ScreenHeight/2
+	ballDX = BallSpeed * math.Cos(BounceAngleRad)
+	ballDY = BallSpeed * -math.Sin(BounceAngleRad)
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
@@ -85,6 +111,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	// Draw ball
 	ebitenutil.DrawRect(screen, float64(ballX), float64(ballY), BallSize, BallSize, color.White)
+
+	// Draw scores
+	scoreText := fmt.Sprintf("Player: %d - Opponent: %d", player1Score, opponentScore)
+	ebitenutil.DebugPrint(screen, scoreText)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {

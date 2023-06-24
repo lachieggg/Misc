@@ -3,10 +3,11 @@
 import random
 from datetime import datetime
 from time import sleep
+from itertools import product
 
-random.seed(datetime.now())
+random.seed(str(datetime.now()))
 
-VERBOSE = False
+VERBOSE = True
 
 N_PEOPLE = 10
 N_BEDS = 11
@@ -91,8 +92,7 @@ solutions = []
 # (Combinations)
 # 
 # (Uses random functions)
-# 
-while(False):
+while(True):
     solution = {}
     for i in range(1, N_PEOPLE+1):
         available_rooms = get_available_rooms()
@@ -130,48 +130,26 @@ while(1):
     break
 
 solutions = []
+
 # Pronumerals represent an individual 'person id'
-# which 
-# 
-# Generates a set of dictionaries as a solution
+# which generates a set of dictionaries as a solution
 # 
 # Where each key in the dictionary is a particular bed
 # number, and each value is which person is staying in
 # that bed
 #
 # The 'person id' of 0 represents an empty bed
-for a in range(0, N_PEOPLE+1):
-    break
-    vars = [a]
-    for b in range(0, N_PEOPLE+1):
-        vars = [a,b]
-        if(more_than_one_bed_empty(vars)): continue
-        for c in range(0, N_PEOPLE+1):
-            vars = [a,b,c]
-            if(more_than_one_bed_empty(vars)): continue
-            for d in range(0, N_PEOPLE+1):
-                vars = [a,b,c,d]
-                if(more_than_one_bed_empty(vars)): continue
-                for e in range(0, N_PEOPLE+1):
-                    vars = [a,b,c,d,e]
-                    if(more_than_one_bed_empty(vars)): continue
-                    for f in range(0, N_PEOPLE+1):
-                        vars = [a,b,c,d,e,f]
-                        if(more_than_one_bed_empty(vars)): continue
-                        for g in range(0, N_PEOPLE+1):
-                            vars = [a,b,c,d,e,f,g]
-                            if(more_than_one_bed_empty(vars)): continue
-                            for h in range(0, N_PEOPLE+1):
-                                vars = [a,b,c,d,e,f,g,h]
-                                if(more_than_one_bed_empty(vars)): continue
-                                for i in range(0, N_PEOPLE+1):
-                                    vars = [a,b,c,d,e,f,g,i]
-                                    if(more_than_one_bed_empty(vars)): continue
-                                    for j in range(0, N_PEOPLE+1):
-                                        vars = [a,b,c,d,e,f,g,h,i,j]
-                                        if(more_than_one_bed_empty(vars)): continue
-                                        solutions.append(Solution(vars))
-                                        print(solutions)
+def generate_solutions(depth, N_PEOPLE):
+    solutions = []
+    for vars in product(range(N_PEOPLE+1), repeat=depth):
+        if not more_than_one_bed_empty(vars):
+            solutions.append(Solution(vars))
+    return solutions
+
+depth = 10  # Number of nested loops
+solutions = generate_solutions(depth, N_PEOPLE)
+for solution in solutions:
+    print(solution)
 
 print(len(solutions))
 

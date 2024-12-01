@@ -1,0 +1,3 @@
+<php>
+    <autoload-dev>vendor/autoload.php</autoload-dev>
+</php>

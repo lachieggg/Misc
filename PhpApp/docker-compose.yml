@@ -1,0 +1,61 @@
+# docker-compose.yml
+version: "3.7"
+services:
+  application:
+    build:
+      args:
+        user: lachlan
+        uid: 1000
+      context: .
+      dockerfile: ./docker/application/Dockerfile.application
+    container_name: application
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - app-network
+    env_file: .env
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+    networks:
+      - app-network
+
+  database:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile.postgres
+    env_file: .env
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    networks:
+      - app-network
+
+  webserver:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile.nginx
+    container_name: webserver
+    restart: unless-stopped
+    depends_on:
+      - application
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./:/var/www
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,36 @@
+# Composer
+vendor/
+
+# Env
+.env
+
+# IDE
+.idea/
+
+# Node
+node_modules/
+public/js/generated
+
+# SSL/TLS
+*.crt
+*.key
+*.csr
+*.pub
+*.pem
+*.cert
+
+# Mac OS
+.DS_Store
+
+# Log files
+*.log
+
+# Cache
+**/twig-cache
+
+# PHP
+.php-cs-fixer.cache
+.phpunit.result.cache
+
+# Acme
+**/.well-known

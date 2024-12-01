@@ -1,0 +1,37 @@
+{
+    "require": {
+        "slim/slim": "^4.0",
+        "slim/twig-view": "^3.3.0",
+        "illuminate/database": "^8.12",
+        "respect/validation": "^1.0.4",
+        "ramsey/uuid": "^4.1",
+        "slim/flash": "^0.4.0",
+        "doctrine/dbal": "^3.1.4",
+        "vlucas/phpdotenv": "^5.5",
+        "robmorgan/phinx": "^0.12.9",
+        "illuminate/support": "^8.78",
+        "slim/psr7": "^1.6",
+        "php-di/php-di": "^6.4",
+        "monolog/monolog": "^2.8",
+        "psr/http-message": "^1.0"
+    },
+    "autoload": {
+      "psr-4" : {
+        "LoginApp\\": "app"
+      }
+    },
+    "scripts": {
+      "start": [
+        "npm install && npm run build && docker-compose up -d"
+      ],
+      "stop": [
+        "docker kill $(docker ps -q)"
+      ],
+      "restart": [
+        "composer stop; composer start"
+      ],
+      "migrate": [
+        "docker exec -it application vendor/bin/phinx migrate --configuration=db/config.php"
+      ]
+    }
+}

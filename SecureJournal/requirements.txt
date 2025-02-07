@@ -1,2 +1,0 @@
-PyGObject==3.42.0
-cryptography==36.0.1

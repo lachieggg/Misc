@@ -1,0 +1,19 @@
+items:
+  cheeseburger:
+    id: 1
+    name: "Cheeseburger"
+    price: 15.00
+  chicken_burger:
+    id: 2
+    name: "Chicken Burger"
+    price: 20.00
+  soft_drink_small:
+    id: 3
+    name: "Soft Drink (Small)"
+    price: 4.00
+  soft_drink_large:
+    id: 4
+    name: "Soft Drink (Large)"
+    price: 5.00
+
+tax_rate: 0.10

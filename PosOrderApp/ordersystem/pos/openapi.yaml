@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Restaurant Order System
+  version: 1.0.0
+
+components:
+  schemas:
+    MenuItem:
+      type: object
+      required:
+        - id
+        - name
+        - price
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+          format: float
+
+    OrderItem:
+      type: object
+      required:
+        - menu_item_id
+        - quantity
+      properties:
+        menu_item_id:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+
+    Order:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+
+    LineItem:
+      type: object
+      required:
+        - name
+        - quantity
+        - unit_price
+        - subtotal
+      properties:
+        name:
+          type: string
+        quantity:
+          type: integer
+        unit_price:
+          type: number
+        subtotal:
+          type: number
+
+    Receipt:
+      type: object
+      required:
+        - line_items
+        - subtotal
+        - tax
+        - total
+      properties:
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        subtotal:
+          type: number
+        tax:
+          type: number
+        total:
+          type: number

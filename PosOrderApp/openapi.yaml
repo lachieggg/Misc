@@ -1,0 +1,20 @@
+openapi: 3.0.0
+info:
+  title: Restaurant Order API
+  version: 1.0.0
+components:
+  schemas:
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        base_price:
+          type: number
+        category:
+          type: string
+        size:
+          type: string
+          nullable: true
